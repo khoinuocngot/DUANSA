@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comments Hub</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Space+Grotesk:wght@500;700&display=swap');
+    :root{--bg:#fff8ee;--card:#fffdf9;--line:#ffd9b5;--brand:#ff8f00;--brand-deep:#ef6c00;--text:#2f2419;--muted:#776655;--shadow:0 18px 40px rgba(239,108,0,.12)}
+    *{box-sizing:border-box}html,body{margin:0;padding:0;background:transparent;color:var(--text);font-family:"Manrope",sans-serif}body{padding:2px}
+    .shell{max-width:930px;margin:0 auto;padding:18px;border-radius:28px;border:1px solid rgba(255,191,128,.8);background:radial-gradient(circle at top right,rgba(255,143,0,.14),transparent 26%),linear-gradient(180deg,#fffdf9,#fff7ef);box-shadow:var(--shadow)}
+    .hero,.toolbar,.grid,.stats-grid,.form,.list{display:grid;gap:16px}.hero{grid-template-columns:minmax(0,1.2fr) minmax(260px,.82fr)}.toolbar{grid-template-columns:minmax(0,1fr) auto;align-items:end;margin-top:16px}.grid{grid-template-columns:minmax(300px,.92fr) minmax(0,1.38fr);margin-top:16px}.stats-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.form{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px}.list{gap:12px}
+    .card,.stats,.composer,.feed{padding:18px;border-radius:24px;border:1px solid rgba(255,217,181,.94);background:var(--card);box-shadow:0 10px 26px rgba(239,108,0,.07)}
+    .kicker{display:inline-flex;align-items:center;gap:8px;color:var(--brand-deep);font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.kicker::before{content:"";width:8px;height:8px;border-radius:999px;background:linear-gradient(135deg,#ffb300,#ff6f00)}
+    h1,h2{margin:10px 0 8px;color:#2c2217;font-family:"Space Grotesk",sans-serif;line-height:1.03;letter-spacing:-.04em}h1{font-size:clamp(26px,4vw,36px)}h2{font-size:clamp(22px,3vw,30px)}p,.muted{margin:0;color:var(--muted);font-size:14px;line-height:1.7}
+    .hero-badges,.filters,.controls,.stars,.quick,.reactions,.item-tools{display:flex;flex-wrap:wrap;gap:8px}.hero-badges{margin-top:14px}.controls{justify-content:flex-end;align-items:center}
+    .hero-chip,.pill,.btn,.tag,.react,.star,.toggle{display:inline-flex;align-items:center;padding:8px 12px;border-radius:999px;border:1px solid rgba(255,205,152,.92);background:#fff8f0;color:var(--brand-deep);font-size:12px;font-weight:800;cursor:pointer;transition:transform .16s ease,background .16s ease}.hero-chip,.pill{cursor:default}.btn:hover,.tag:hover,.react:hover,.star:hover,.toggle:hover{transform:translateY(-1px)}.btn.active,.star.active{border-color:transparent;background:linear-gradient(135deg,#ffb74d,#ff8f00);color:#fff}.hero-chip{background:rgba(255,143,0,.08)}.pill{font-size:11px;text-transform:uppercase;letter-spacing:.05em}
+    input,select,textarea{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:16px;background:#fff;color:var(--text);font:inherit;outline:none}.search{min-width:240px}.sort{min-width:180px}textarea{min-height:150px;resize:vertical;line-height:1.6}
+    .stat{padding:14px;border-radius:18px;border:1px solid rgba(255,221,191,.94);background:#fffaf4}.stat label{display:block;color:var(--muted);font-size:12px;font-weight:800}.stat strong{display:block;margin-top:8px;color:var(--brand-deep);font-family:"Space Grotesk",sans-serif;font-size:28px;line-height:1}
+    .full{grid-column:1/-1}.label{display:block;margin-bottom:7px;color:var(--brand-deep);font-size:12px;font-weight:800}.footer{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin-top:12px}.primary{padding:12px 18px;border:0;border-radius:16px;background:linear-gradient(135deg,#ff9800,#ef6c00);color:#fff;font-size:13px;font-weight:900;cursor:pointer;box-shadow:0 12px 20px rgba(239,108,0,.2)}
+    .featured{margin:14px 0;padding:16px;border-radius:20px;border:1px solid rgba(255,214,171,.96);background:radial-gradient(circle at top right,rgba(255,183,77,.18),transparent 26%),linear-gradient(135deg,#fffdf9,#fff6ea)}
+    .item{padding:16px;border-radius:20px;border:1px solid rgba(255,220,187,.96);background:#fffdfa}.head{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:start}.avatar{width:46px;height:46px;border-radius:16px;background:linear-gradient(135deg,#ffb74d,#ff8f00);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:16px;font-weight:900}.name{color:#2e2215;font-size:15px;font-weight:900}.meta,.time{color:var(--muted);font-size:12px;line-height:1.5}.stars-view{color:#ff9800;font-size:14px;font-weight:900;letter-spacing:.06em}
+    .item-body{margin-top:12px;overflow:hidden;transition:max-height .28s ease}.item-body.is-collapsed .text{display:-webkit-box;overflow:hidden;-webkit-line-clamp:4;-webkit-box-orient:vertical}.text{color:#433526;font-size:14px;line-height:1.75;white-space:pre-wrap;word-break:break-word}.item-tools{margin-top:12px;align-items:center;justify-content:space-between}
+    .khen{background:rgba(46,125,50,.12);color:#1b6a41}.gop-y{background:rgba(2,136,209,.12);color:#00658b}.cau-hoi{background:rgba(142,36,170,.12);color:#7b1fa2}.bug{background:rgba(211,47,47,.12);color:#b71c1c}
+    .reply{margin-top:12px;padding:12px 14px;border-radius:16px;border:1px solid rgba(255,214,171,.96);background:linear-gradient(135deg,#fff2de,#fffaf3)}.reply strong{display:block;margin-bottom:6px;color:var(--brand-deep);font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+    .empty{padding:24px 18px;border-radius:18px;border:1px dashed rgba(255,205,152,.96);background:#fffdf9;color:var(--muted);text-align:center;font-size:14px;line-height:1.7}
+    .toast{position:fixed;right:16px;bottom:16px;padding:12px 14px;border-radius:14px;background:rgba(33,28,22,.94);color:#fffdf9;font-size:12px;font-weight:700;box-shadow:0 18px 30px rgba(0,0,0,.18);opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .2s ease,transform .2s ease}.toast.show{opacity:1;transform:translateY(0)}
+    @media (max-width:860px){.hero,.toolbar,.grid{grid-template-columns:1fr}.controls{justify-content:flex-start}}
+    @media (max-width:560px){.shell{padding:12px;border-radius:22px}.card,.stats,.composer,.feed{padding:14px;border-radius:20px}.stats-grid,.form{grid-template-columns:1fr}.head{grid-template-columns:auto minmax(0,1fr)}.time{grid-column:2}.item-tools{align-items:flex-start;flex-direction:column}}
+  </style>
+</head>
+<body>
+  <div class="shell" id="shell">
+    <section class="hero">
+      <div class="card">
+        <span class="kicker">Community Wall</span>
+        <h1>Comments & Feedback</h1>
+        <p>Phần comments mới được làm lại để đồng bộ hơn với web: có filter, sort, chấm sao, reaction, autosave bản nháp và chiều cao tự dãn nên không còn cảm giác iframe bị hụt nội dung.</p>
+        <div class="hero-badges">
+          <span class="hero-chip">Local save</span>
+          <span class="hero-chip">Realtime resize</span>
+          <span class="hero-chip">Long comment toggle</span>
+        </div>
+      </div>
+      <div class="stats">
+        <span class="kicker">Pulse</span>
+        <div class="stats-grid">
+          <div class="stat"><label>Tổng bình luận</label><strong id="mCount">0</strong></div>
+          <div class="stat"><label>Điểm trung bình</label><strong id="mRating">0.0</strong></div>
+          <div class="stat"><label>Lượt hữu ích</label><strong id="mHelpful">0</strong></div>
+          <div class="stat"><label>Tích cực</label><strong id="mPositive">0%</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="toolbar">
+      <div class="filters" id="filters"></div>
+      <div class="controls">
+        <input class="search" id="search" type="search" placeholder="Tìm theo tên hoặc nội dung...">
+        <select class="sort" id="sort">
+          <option value="newest">Mới nhất</option>
+          <option value="rating">Đánh giá cao</option>
+          <option value="helpful">Nhiều tương tác</option>
+        </select>
+      </div>
+    </section>
+
+    <section class="grid">
+      <aside class="composer">
+        <span class="kicker">Gửi bình luận</span>
+        <h2>Chia sẻ cảm nhận</h2>
+        <p class="muted">Bạn có thể khen, góp ý, hỏi thêm hoặc báo lỗi để nhóm cải tiến tiếp. Dữ liệu lưu local nên up GitHub Pages vẫn chạy ổn.</p>
+        <div class="form">
+          <div><label class="label" for="name">Tên hiển thị</label><input id="name" maxlength="36" placeholder="Ví dụ: Khôi, Linh..."></div>
+          <div><label class="label" for="role">Vai trò</label><input id="role" maxlength="48" placeholder="Ví dụ: Sinh viên IT"></div>
+          <div><label class="label" for="category">Loại bình luận</label><select id="category"><option value="khen">Khen / tích cực</option><option value="gop-y">Góp ý nâng cấp</option><option value="cau-hoi">Câu hỏi</option><option value="bug">Báo lỗi</option></select></div>
+          <div><label class="label">Chấm sao</label><div class="stars" id="stars"></div></div>
+          <div class="full"><label class="label">Tag nhanh</label><div class="quick" id="quick"></div></div>
+          <div class="full"><label class="label" for="message">Nội dung</label><textarea id="message" maxlength="560" placeholder="Bạn thích điểm nào nhất, muốn nhóm nâng cấp gì tiếp hoặc phát hiện chỗ nào chưa ổn?"></textarea></div>
+        </div>
+        <div class="footer">
+          <button class="primary" id="submit" type="button">Gửi bình luận</button>
+          <span class="muted" id="count">0 / 560</span>
+        </div>
+      </aside>
+
+      <section class="feed">
+        <span class="kicker">Bảng phản hồi</span>
+        <h2>Những bình luận nổi bật</h2>
+        <p class="muted" id="feedMeta">Đang hiển thị phản hồi mới nhất.</p>
+        <div class="featured" id="featured"></div>
+        <div class="list" id="list"></div>
+      </section>
+    </section>
+  </div>
+  <div class="toast" id="toast"></div>
+
+  <script>
+    (function () {
+      const commentsKey = "group2-comments-hub-v3";
+      const draftKey = "group2-comments-draft-v1";
+      const categories = { khen: "Khen", "gop-y": "Góp ý", "cau-hoi": "Câu hỏi", bug: "Báo lỗi" };
+      const filters = [["all", "Tất cả"], ["khen", "Khen"], ["gop-y", "Góp ý"], ["cau-hoi", "Câu hỏi"], ["bug", "Báo lỗi"]];
+      const quickTags = ["Game debug", "Prompt hub", "Leaderboard", "Giao diện", "Mobile", "Comment box"];
+      const seeds = [
+        { id: "seed-1", name: "Minh", role: "Sinh viên IT năm 2", category: "khen", rating: 5, text: "Phần game debug khá cuốn, nhất là khi có leaderboard và badge. Nếu comments cũng mượt như vậy thì tổng thể web trông hoàn thiện hơn nhiều.", createdAt: Date.now() - 1000 * 60 * 60 * 20, reactions: { helpful: 14, love: 8, idea: 2 }, reply: "Cảm ơn bạn. Nhóm đang giữ toàn bộ block đồng nhất hơn để web nhìn liền mạch." },
+        { id: "seed-2", name: "Linh", role: "Reviewer", category: "gop-y", rating: 4, text: "Mình thích tone cam hiện tại. Bản comment mới mà có filter, sort, chấm sao và reaction thì web sẽ xịn hơn hẳn bản iframe cũ.", createdAt: Date.now() - 1000 * 60 * 60 * 9, reactions: { helpful: 10, love: 5, idea: 6 }, reply: "Đã thêm đủ các phần đó và cho lưu local để GitHub Pages vẫn chạy ổn." },
+        { id: "seed-3", name: "Quân", role: "Frontend learner", category: "bug", rating: 4, text: "Trước đây comment nhìn rời rạc và không đồng bộ với phần game. Nếu phần này tự dãn theo nội dung thì sẽ bớt lỗi layout hơn nhiều. Comment dài cũng nên có nút xem thêm để giữ block gọn hơn.", createdAt: Date.now() - 1000 * 60 * 60 * 4, reactions: { helpful: 7, love: 2, idea: 4 }, reply: "Phiên bản mới đã gửi chiều cao về trang chính để section tự kéo dài và comment dài có thể xổ ra khi bấm." }
+      ];
+      const dom = {
+        shell: document.getElementById("shell"), filters: document.getElementById("filters"), search: document.getElementById("search"), sort: document.getElementById("sort"),
+        name: document.getElementById("name"), role: document.getElementById("role"), category: document.getElementById("category"), stars: document.getElementById("stars"),
+        quick: document.getElementById("quick"), message: document.getElementById("message"), submit: document.getElementById("submit"), count: document.getElementById("count"),
+        mCount: document.getElementById("mCount"), mRating: document.getElementById("mRating"), mHelpful: document.getElementById("mHelpful"), mPositive: document.getElementById("mPositive"),
+        feedMeta: document.getElementById("feedMeta"), featured: document.getElementById("featured"), list: document.getElementById("list"), toast: document.getElementById("toast")
+      };
+      let filter = "all";
+      let rating = 5;
+      let comments = loadComments();
+      let expanded = {};
+      let toastTimer = null;
+
+      function loadComments() { try { const saved = JSON.parse(localStorage.getItem(commentsKey) || "null"); if (Array.isArray(saved) && saved.length) return saved; } catch (error) {} return seeds.slice(); }
+      function saveComments() { localStorage.setItem(commentsKey, JSON.stringify(comments)); }
+      function saveDraft() { localStorage.setItem(draftKey, JSON.stringify({ name: dom.name.value, role: dom.role.value, category: dom.category.value, message: dom.message.value, rating: rating })); }
+      function loadDraft() { try { const draft = JSON.parse(localStorage.getItem(draftKey) || "null"); if (!draft) return; dom.name.value = draft.name || ""; dom.role.value = draft.role || ""; dom.category.value = draft.category || "khen"; dom.message.value = draft.message || ""; rating = Number(draft.rating || 5); } catch (error) {} }
+      function clearDraft() { localStorage.removeItem(draftKey); }
+      function esc(text) { return String(text || "").replace(/[&<>"']/g, function (char) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" }[char]; }); }
+      function initials(name) { return (String(name || "").trim().split(/\s+/).slice(0, 2).map(function (part) { return part.charAt(0).toUpperCase(); }).join("")) || "G2"; }
+      function starText(value) { return "★".repeat(value) + "☆".repeat(5 - value); }
+      function totalReactions(item) { return Number(item.reactions.helpful || 0) + Number(item.reactions.love || 0) + Number(item.reactions.idea || 0); }
+      function ago(time) { const mins = Math.floor((Date.now() - Number(time || 0)) / 60000); if (mins < 1) return "vừa xong"; if (mins < 60) return mins + " phút trước"; const hrs = Math.floor(mins / 60); if (hrs < 24) return hrs + " giờ trước"; return Math.floor(hrs / 24) + " ngày trước"; }
+      function showToast(text) { dom.toast.textContent = text; dom.toast.classList.add("show"); clearTimeout(toastTimer); toastTimer = setTimeout(function () { dom.toast.classList.remove("show"); }, 1800); }
+      function updateCount() { dom.count.textContent = dom.message.value.length + " / 560"; }
+
+      function currentList() {
+        const q = dom.search.value.trim().toLowerCase();
+        const mode = dom.sort.value;
+        const list = comments.filter(function (item) {
+          const okFilter = filter === "all" || item.category === filter;
+          const haystack = [item.name, item.role, item.text, categories[item.category]].join(" ").toLowerCase();
+          return okFilter && (!q || haystack.indexOf(q) !== -1);
+        });
+        list.sort(function (a, b) {
+          if (mode === "rating") { if (b.rating !== a.rating) return b.rating - a.rating; return Number(b.createdAt) - Number(a.createdAt); }
+          if (mode === "helpful") { const diff = totalReactions(b) - totalReactions(a); if (diff !== 0) return diff; return Number(b.createdAt) - Number(a.createdAt); }
+          return Number(b.createdAt) - Number(a.createdAt);
+        });
+        return list;
+      }
+
+      function renderFilters() {
+        dom.filters.innerHTML = filters.map(function (item) { return '<button class="btn' + (item[0] === filter ? " active" : "") + '" type="button" data-filter="' + item[0] + '">' + item[1] + "</button>"; }).join("");
+        dom.filters.querySelectorAll("[data-filter]").forEach(function (button) { button.addEventListener("click", function () { filter = button.getAttribute("data-filter"); render(); }); });
+      }
+
+      function renderStars() {
+        dom.stars.innerHTML = [1, 2, 3, 4, 5].map(function (value) { return '<button class="star' + (value <= rating ? " active" : "") + '" type="button" data-star="' + value + '">' + value + " sao</button>"; }).join("");
+        dom.stars.querySelectorAll("[data-star]").forEach(function (button) { button.addEventListener("click", function () { rating = Number(button.getAttribute("data-star")) || 5; renderStars(); saveDraft(); syncHeight(); }); });
+      }
+
+      function renderQuick() {
+        dom.quick.innerHTML = quickTags.map(function (tag) { return '<button class="tag" type="button" data-tag="' + esc(tag) + '">' + esc(tag) + "</button>"; }).join("");
+        dom.quick.querySelectorAll("[data-tag]").forEach(function (button) { button.addEventListener("click", function () { const suffix = "[" + button.getAttribute("data-tag") + "]"; dom.message.value = dom.message.value.trim() ? dom.message.value.trim() + " " + suffix : suffix + " "; updateCount(); saveDraft(); syncHeight(); }); });
+      }
+
+      function renderStats(list) {
+        const count = comments.length;
+        const avg = count ? comments.reduce(function (sum, item) { return sum + Number(item.rating || 0); }, 0) / count : 0;
+        const helpful = comments.reduce(function (sum, item) { return sum + Number(item.reactions.helpful || 0); }, 0);
+        const positive = count ? Math.round((comments.filter(function (item) { return Number(item.rating || 0) >= 4; }).length / count) * 100) : 0;
+        dom.mCount.textContent = String(count); dom.mRating.textContent = avg.toFixed(1); dom.mHelpful.textContent = String(helpful); dom.mPositive.textContent = positive + "%";
+        dom.feedMeta.textContent = "Đang hiển thị " + list.length + " / " + count + " bình luận phù hợp với bộ lọc hiện tại.";
+      }
+
+      function renderFeatured(list) {
+        if (!list.length) { dom.featured.innerHTML = '<span class="kicker">Top cảm nhận</span><h2 style="font-size:20px;margin-top:8px">Chưa có bình luận</h2><p class="muted">Hãy để lại comment đầu tiên để mở phần này.</p>'; return; }
+        const top = list.slice().sort(function (a, b) { return (b.rating * 10 + totalReactions(b)) - (a.rating * 10 + totalReactions(a)); })[0];
+        dom.featured.innerHTML = '<span class="kicker">Top cảm nhận</span><h2 style="font-size:20px;margin-top:8px">' + esc(top.name) + " · " + esc(categories[top.category]) + '</h2><div class="hero-badges" style="margin-top:10px"><span class="pill ' + top.category + '">' + esc(categories[top.category]) + '</span><span class="hero-chip">' + starText(Number(top.rating || 0)) + '</span><span class="hero-chip">' + totalReactions(top) + " tương tác</span></div><p class=\"muted\" style=\"margin-top:10px\">" + esc(top.text) + "</p>";
+      }
+
+      function shouldCollapse(item) { return String(item.text || "").length > 165; }
+      function itemMarkup(item) {
+        const collapsed = shouldCollapse(item) && !expanded[item.id];
+        return '<article class="item"><div class="head"><div class="avatar">' + esc(initials(item.name)) + '</div><div><div class="name">' + esc(item.name) + '</div><div class="meta">' + esc(item.role || "Khách ghé thăm") + ' · <span class="pill ' + item.category + '">' + esc(categories[item.category]) + '</span></div></div><div class="time"><div class="stars-view">' + starText(Number(item.rating || 0)) + '</div><div>' + esc(ago(item.createdAt)) + '</div></div></div><div class="item-body' + (collapsed ? " is-collapsed" : "") + '"><div class="text">' + esc(item.text) + '</div>' + (item.reply ? '<div class="reply"><strong>Group2 phản hồi</strong><div class="muted">' + esc(item.reply) + '</div></div>' : "") + '</div><div class="item-tools"><div class="reactions"><button class="react" type="button" data-reaction="helpful" data-id="' + item.id + '">Hữu ích <strong>' + Number(item.reactions.helpful || 0) + '</strong></button><button class="react" type="button" data-reaction="love" data-id="' + item.id + '">Thích <strong>' + Number(item.reactions.love || 0) + '</strong></button><button class="react" type="button" data-reaction="idea" data-id="' + item.id + '">Ý tưởng <strong>' + Number(item.reactions.idea || 0) + '</strong></button></div>' + (shouldCollapse(item) ? '<button class="toggle" type="button" data-toggle="' + item.id + '">' + (collapsed ? "Xem thêm" : "Thu gọn") + "</button>" : "") + "</div></article>";
+      }
+
+      function renderList(list) {
+        if (!list.length) { dom.list.innerHTML = '<div class="empty">Không có bình luận nào khớp bộ lọc hiện tại. Thử đổi filter hoặc để lại góp ý mới.</div>'; return; }
+        dom.list.innerHTML = list.map(itemMarkup).join("");
+        dom.list.querySelectorAll("[data-reaction]").forEach(function (button) { button.addEventListener("click", function () { const id = button.getAttribute("data-id"); const reaction = button.getAttribute("data-reaction"); const item = comments.find(function (entry) { return entry.id === id; }); if (!item) return; item.reactions[reaction] = Number(item.reactions[reaction] || 0) + 1; saveComments(); render(); showToast("Đã ghi nhận tương tác."); }); });
+        dom.list.querySelectorAll("[data-toggle]").forEach(function (button) { button.addEventListener("click", function () { const id = button.getAttribute("data-toggle"); expanded[id] = !expanded[id]; render(); }); });
+      }
+
+      function render() { const list = currentList(); renderFilters(); renderStars(); renderQuick(); renderStats(list); renderFeatured(list); renderList(list); syncHeight(); }
+      function submit() {
+        const name = dom.name.value.trim(), role = dom.role.value.trim(), text = dom.message.value.trim();
+        if (!name || !text) { showToast("Nhập tên và nội dung trước đã nhé."); return; }
+        comments.unshift({ id: "cmt-" + Date.now(), name: name, role: role || "Khách ghé thăm", category: dom.category.value, rating: rating, text: text, createdAt: Date.now(), reactions: { helpful: 0, love: 0, idea: 0 }, reply: "" });
+        saveComments(); clearDraft(); dom.message.value = ""; dom.search.value = ""; dom.sort.value = "newest"; filter = "all"; rating = 5; updateCount(); render(); showToast("Đã lưu bình luận vào bảng cộng đồng.");
+      }
+
+      function syncHeight() {
+        const height = Math.max(dom.shell.scrollHeight, dom.shell.offsetHeight, document.documentElement.scrollHeight, document.body.scrollHeight) + 24;
+        const send = function () { window.parent.postMessage({ type: "commentHubHeight", height: Math.ceil(height) }, "*"); };
+        requestAnimationFrame(send); setTimeout(send, 120); setTimeout(send, 280);
+      }
+
+      dom.search.addEventListener("input", render);
+      dom.sort.addEventListener("change", render);
+      dom.message.addEventListener("input", function () { updateCount(); saveDraft(); syncHeight(); });
+      dom.name.addEventListener("input", function () { saveDraft(); syncHeight(); });
+      dom.role.addEventListener("input", function () { saveDraft(); syncHeight(); });
+      dom.category.addEventListener("change", saveDraft);
+      dom.submit.addEventListener("click", submit);
+      window.addEventListener("resize", syncHeight);
+      window.addEventListener("message", function (event) { if (event.data && event.data.type === "requestCommentHubHeight") syncHeight(); });
+      if (window.ResizeObserver) new ResizeObserver(syncHeight).observe(dom.shell);
+
+      loadDraft();
+      updateCount();
+      render();
+    })();
+  </script>
+</body>
+</html>
